@@ -1,0 +1,80 @@
+<div class="form-container">
+  <div class="form-card">
+    <h2>{{ isEditMode ? '✏️ Редактировать кота' : '➕ Добавить кота' }}</h2>
+
+    @if (loading) {
+      <div class="loading">Загрузка...</div>
+    }
+
+    @if (error) {
+      <div class="error">{{ error }}</div>
+    }
+
+    @if (!loading) {
+      <form (ngSubmit)="onSubmit()">
+        <div class="form-group">
+          <label for="name">Имя кота *</label>
+          <input
+            type="text"
+            id="name"
+            name="name"
+            [(ngModel)]="cat.name"
+            class="form-control"
+            placeholder="Например: Мурзик"
+            required
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="age">Возраст (лет) *</label>
+          <input
+            type="number"
+            id="age"
+            name="age"
+            [(ngModel)]="cat.age"
+            class="form-control"
+            placeholder="0-30"
+            min="0"
+            max="30"
+            required
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="breed">Порода *</label>
+          <select
+            id="breed"
+            name="breed"
+            [(ngModel)]="cat.breed"
+            class="form-control"
+            required
+          >
+            @for (breedItem of breeds; track breedItem.value) {
+              <option [value]="breedItem.value">{{ breedItem.label }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="form-group checkbox">
+          <label>
+            <input
+              type="checkbox"
+              name="is_fluffy"
+              [(ngModel)]="cat.is_fluffy"
+            />
+            Пушистый кот
+          </label>
+        </div>
+
+        <div class="form-actions">
+          <button type="button" class="btn-cancel" (click)="router.navigate(['/cats'])">
+            Отмена
+          </button>
+          <button type="submit" class="btn-submit" [disabled]="loading">
+            {{ loading ? 'Сохранение...' : (isEditMode ? 'Обновить' : 'Создать') }}
+          </button>
+        </div>
+      </form>
+    }
+  </div>
+</div>

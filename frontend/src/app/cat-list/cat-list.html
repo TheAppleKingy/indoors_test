@@ -1,0 +1,59 @@
+<div class="cat-list-container">
+  <!-- Если не авторизован - показываем сообщение -->
+  <div *ngIf="!isLoggedIn" class="not-authorized">
+    <h2>🐱 Добро пожаловать!</h2>
+    <p>Чтобы управлять своими котами, пожалуйста, войдите или зарегистрируйтесь.</p>
+  </div>
+
+  <!-- Если авторизован -->
+  <div *ngIf="isLoggedIn">
+    <div class="header">
+      <h2>🐱 Мои коты</h2>
+      <button class="btn-add" routerLink="/cats/new">+ Добавить кота</button>
+    </div>
+
+    <div *ngIf="loading" class="loading">
+      Загрузка...
+    </div>
+
+    <div *ngIf="error" class="error">
+      {{ error }}
+    </div>
+
+    <div *ngIf="!loading && cats.length === 0" class="empty">
+      <p>У вас пока нет котов</p>
+      <button routerLink="/cats/new" class="btn-add-first">Добавить первого кота 🐱</button>
+    </div>
+
+    <div *ngIf="!loading && cats.length > 0" class="cats-grid">
+      <div *ngFor="let cat of cats" class="cat-card">
+        <div class="cat-header">
+          <h3>{{ cat.name }}</h3>
+          <span class="breed">{{ cat.breed }}</span>
+        </div>
+        
+        <div class="cat-info">
+          <div class="info-item">
+            <span class="label">Возраст:</span>
+            <span class="value">{{ cat.age }} лет</span>
+          </div>
+          <div class="info-item">
+            <span class="label">Волосатость:</span>
+            <span class="value">
+              {{ cat.is_fluffy ? 'Пушистый 🐾' : 'Лысый 🧴' }}
+            </span>
+          </div>
+          <div class="info-item" *ngIf="cat.created_at">
+            <span class="label">Добавлен:</span>
+            <span class="value">{{ cat.created_at | date:'dd.MM.yyyy' }}</span>
+          </div>
+        </div>
+
+        <div class="cat-actions">
+          <button class="btn-edit" (click)="editCat(cat.id!)">✏️ Редактировать</button>
+          <button class="btn-delete" (click)="deleteCat(cat.id!)">🗑️ Удалить</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

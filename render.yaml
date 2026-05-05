@@ -1,0 +1,17 @@
+services:
+  - type: web
+    name: cat-backend
+    runtime: python
+    rootDir: app
+    buildCommand: ./build.sh
+    startCommand: daphne -b 0.0.0.0 -p $PORT core.asgi:application
+    envVars:
+      - key: SECRET_KEY
+        generateValue: true
+
+  - type: web
+    name: cat-frontend
+    runtime: static
+    rootDir: frontend
+    buildCommand: npm install && npm run build
+    staticPublishPath: ./dist/frontend
