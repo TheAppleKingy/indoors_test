@@ -5,7 +5,7 @@ import { Cat } from '../models/cat';
 
 @Injectable({ providedIn: 'root' })
 export class CatService {
-  private apiUrl = 'http://localhost:8000/api';
+  private apiUrl = 'https://indoors-test.onrender.com/api';
 
   constructor(private http: HttpClient) {}
 

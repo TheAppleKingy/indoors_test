@@ -5,7 +5,7 @@ import { tap } from 'rxjs/operators';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-  private apiUrl = 'http://localhost:8000/api';
+  private apiUrl = 'https://indoors-test.onrender.com/api';
   private authStatus = new BehaviorSubject<boolean>(this.isLoggedIn());
   
   authStatus$ = this.authStatus.asObservable();
